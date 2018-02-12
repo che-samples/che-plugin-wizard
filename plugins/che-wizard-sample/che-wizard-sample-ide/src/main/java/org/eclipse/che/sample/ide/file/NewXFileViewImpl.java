@@ -7,11 +7,8 @@
  */
 package org.eclipse.che.sample.ide.file;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
@@ -35,29 +32,8 @@ public class NewXFileViewImpl extends Window implements NewXFileView {
       NewJavaSourceFileViewImplUiBinder uiBinder, SampleWizardLocalizationConstant constant) {
     setTitle(constant.title());
 
-    Button btnCancel =
-        createButton(
-            constant.buttonCancel(),
-            "dialog-cancel",
-            new ClickHandler() {
-              @Override
-              public void onClick(ClickEvent event) {
-                delegate.onCancelClicked();
-              }
-            });
-    addButtonToFooter(btnCancel);
-
-    btnOk =
-        createButton(
-            constant.buttonOk(),
-            "dialog-ok",
-            new ClickHandler() {
-              @Override
-              public void onClick(ClickEvent event) {
-                delegate.onOkClicked();
-              }
-            });
-    addButtonToFooter(btnOk);
+    addFooterButton(constant.buttonCancel(), "dialog-cancel", event -> delegate.onCancelClicked());
+    btnOk = addFooterButton(constant.buttonOk(), "dialog-ok", event -> delegate.onOkClicked());
 
     Widget widget = uiBinder.createAndBindUi(this);
     this.setWidget(widget);
@@ -80,15 +56,13 @@ public class NewXFileViewImpl extends Window implements NewXFileView {
 
   @Override
   public void showDialog() {
+    show(nameField);
+  }
+
+  @Override
+  protected void onShow() {
     nameField.setText("");
     headerField.setText("");
-    show();
-    new Timer() {
-      @Override
-      public void run() {
-        nameField.setFocus(true);
-      }
-    }.schedule(300);
   }
 
   @Override

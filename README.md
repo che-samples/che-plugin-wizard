@@ -12,14 +12,14 @@ Example of running this command
 `docker run -ti -v ~/.m2:/home/user/.m2 -v /home/user/che-plugin-wizard/:/projects eclipse/che-dev:nightly sh -c "mvn clean install"`
 
 Note, that building the module with GWT compilation may fail, if there would not be enough memory.
-Make sure that your Docker container can use at least 3GB of RAM.
+**Make sure that your Docker container can use at least 3GB of RAM.**
 
 # Run
 
 Run this sample by mounting assembly to your Che Docker image:
 
 Description of mounted volumes:
-- `/var/run/docker.sock` - docker socket, required by Che
+- `/var/run/docker.sock` - docker socket, required by Che for launching workspaces
 - `/data` - path to Che data files on host system(logs, configuration)
 - `/assembly` - path to your Che assembly-main files location (note that it has to point to the unwrapped Che files in `target/<eclipse-che-version>/<eclipse-che-version>` of assembly-main)
 
